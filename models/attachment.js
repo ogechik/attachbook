@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 
 const AttachmentSchema = new mongoose.Schema({
-	admin: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 	student: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 	lecture: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 	supervisor: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},

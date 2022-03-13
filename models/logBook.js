@@ -11,6 +11,7 @@ const ReviewSchema = new mongoose.Schema({
 	},
 })
 
+
 const CommentSchema = new mongoose.Schema({
 	comment: String,
 	commentDate: { type: Date, required: true, default: Date.now },
@@ -21,17 +22,25 @@ const CommentSchema = new mongoose.Schema({
 	},
 })
 
-const ReportSchema = new mongoose.Schema({
-	day: String,
-	week: Number,
+
+const LogSchema = new mongoose.Schema({
 	log: String,
+	day: String,
 	logDate: { type: Date, required: true, default: Date.now },
-	comment: CommentSchema,
 })
+
+
+const ReportSchema = new mongoose.Schema({
+	logs: [LogSchema],
+	weekReport: String,
+	review: ReviewSchema,
+	weekEnding: { type: Date, required: true, default: Date.now }
+})
+
 
 const LogBookSchema = new mongoose.Schema({
 	report: [ReportSchema],
-	review: ReviewSchema,
+	comment: CommentSchema,
 	student: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
