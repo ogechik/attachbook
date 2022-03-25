@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
 	salt: String,
 	isApproved: { type: Boolean, required: true, default: false },
 	isSuperUser: { type: Boolean, required: true, default: false },
-	isActive: { type: Boolean, required: true, default: false },
+	isActive: { type: Boolean, required: true, default: true },
 	companyName: String,
 })
 

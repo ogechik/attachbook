@@ -23,12 +23,14 @@ export default function handler(allowed) {
 		verify(auth, process.env.JWT_SECRET, (error, decoded) => {
 			if (!error && decoded) {
 				req.userId = decoded.id
-				req.username = `${decoded.firstName} ${decoded.lastName}`
+				req.username = decoded.firstName
 				req.role = decoded.role
 			}
+
 			if (!isAuthorized(req, allowed)) {
 				return res.status(401).json({ error: 'not authorized' })
 			}
+
 			return next()
 		})
 	})

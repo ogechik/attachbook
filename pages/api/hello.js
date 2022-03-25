@@ -1,5 +1,6 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import handler from '../../utils/handler'
 
-export default function handler(req, res) {
-  res.status(200).json({ name: 'John Doe' })
-}
+export default handler([])
+  .get(async (req, res) => {
+    return res.status(200).json({ msg: 'Hello Mars' })
+})

@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 
 const ReviewSchema = new mongoose.Schema({
-	review: String,
+	reviewText: String,
 	reviewDate: { type: Date, required: true, default: Date.now },
 	reviewer: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -34,7 +34,7 @@ const ReportSchema = new mongoose.Schema({
 	logs: [LogSchema],
 	weekReport: String,
 	review: ReviewSchema,
-	weekEnding: { type: Date, required: true, default: Date.now }
+	weekEnding: { type: Date, required: true}
 })
 
 
@@ -45,6 +45,7 @@ const LogBookSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true,
+		unique: true,
 	},
 })
 
