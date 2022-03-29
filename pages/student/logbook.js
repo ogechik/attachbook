@@ -1,0 +1,106 @@
+import { Typography, Row, Col, Tabs, Collapse } from 'antd'
+import { useEffect, useState } from 'react'
+import StudentNav from '../../components/student/navigation'
+import Logbox from '../../components/logbook/Logbox'
+import ReviewBox from '../../components/logbook/ReviewBox'
+import SwitchBox from '../../components/logbook/SwitchBox'
+const { Title, Text } = Typography
+const { TabPane } = Tabs
+const { Panel } = Collapse
+
+export default function StudentHome({ book, cookie }) {
+  const [logbook, setLogbook] = useState(book)
+  const [week, setWeek] = useState(logbook.report.length - 1)
+  const [report, setReport] = useState(logbook.report[week])
+
+  useEffect(() => {
+    setReport(logbook.report[week])
+  }, [logbook, week])
+
+  const doneIcon = (log) => {
+    if (log.log) {
+      return (
+        <span>
+          <img src="/check.svg" alt="done" />
+        </span>
+      )
+    }
+
+    return null
+  }
+
+  return (
+    <>
+      <StudentNav />
+      <Row>
+        <Col xs={{ span: 22, offset: 1 }} lg={{ span: 16, offset: 4 }}>
+          <Row>
+            <Col span={24}>
+              <Text strong>
+                {`${logbook.student.firstName} ${logbook.student.lastName}`}
+              </Text>
+            </Col>
+            <Col span={24}>
+              <Text>{logbook.registrationNo}</Text>
+            </Col>
+            <Col span={24} style={{ marginTop: '1.25rem' }}>
+              <SwitchBox
+                week={week}
+                setWeek={setWeek}
+                logbook={logbook}
+                setLogbook={setLogbook}
+              />
+            </Col>
+            <Col span={24}>
+              <Tabs defaultActiveKey="1">
+                <TabPane tab="Logs" key="1">
+                  <Collapse defaultActiveKey={['1']}>
+                    {report.logs.map((log) => (
+                      <Panel
+                        header={log.day}
+                        key={log._id}
+                        extra={doneIcon(log)}
+                      >
+                        <Logbox
+                          log={log}
+                          logbookId={logbook._id}
+                          reportId={report._id}
+                          setLogbook={setLogbook}
+                        />
+                      </Panel>
+                    ))}
+                  </Collapse>
+                </TabPane>
+                <TabPane tab="Reviews" key="2">
+                  <ReviewBox
+                    logbookId={logbook._id}
+                    reportId={report._id}
+                    setLogbook={setLogbook}
+                    review={report?.review?.reviewText}
+                  />
+                </TabPane>
+              </Tabs>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </>
+  )
+}
+
+export async function getServerSideProps(context) {
+  const { cookie } = context.req.headers
+
+  const response = await fetch(`${process.env.DOMAIN}/api/s/logbook`, {
+    headers: { cookie },
+  })
+
+  const book = await response.json()
+
+  return {
+    props: {
+      book,
+      cookie,
+    },
+  }
+}

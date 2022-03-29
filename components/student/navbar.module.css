@@ -1,0 +1,26 @@
+@media (min-width: 750px) {
+    .smallMenu{
+        display: none;
+    }
+    .bigMenu {
+        margin-bottom: 4rem;
+    }
+}
+
+@media (max-width: 750px) {
+    .bigMenu {
+        display: none;
+    }
+    .smallMenu{
+        border-bottom: solid #e5e5e5;
+        margin-bottom: 2rem;
+    }
+    .menuBtn{
+        transform: rotate(180deg);
+        margin-right: 0.5rem;
+    }
+}
+.navigation{
+    margin-bottom: 8rem;
+    background-color: rebeccapurple;
+}

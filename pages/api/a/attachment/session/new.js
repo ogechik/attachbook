@@ -1,28 +1,44 @@
-import connectDb from "../../../../../models/connection/connectDb"
-import AttachmentPeriod from "../../../../../models/attachmentPeriod"
 import short from 'short-uuid'
+import connectDb from '../../../../../models/connection/connectDb'
+import AttachmentPeriod from '../../../../../models/attachmentPeriod'
 import handler from '../../../../../utils/handler'
 
-export default handler([0])
-	.post(async (req, res) => {
+export default handler([0]).post(async (req, res) => {
+  try {
+    const { startDate, endDate, lecturers } = req.body
 
-		try{
-			const {startDate, endDate} = req.body
+    await connectDb()
 
-			await connectDb()
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ]
 
-			const cohort = await AttachmentPeriod.find({isArchived: false}).count() + 1
-			const code = short.generate()
-			const attachmentSession = await AttachmentPeriod.create({
-				startingMonth: startDate,
-				endingMonth: endDate,
-				cohort,
-				code
-			})
+    const cohort = `${months[new Date(startDate).getMonth()]}-${
+      months[new Date().getMonth(endDate)]
+    }/${new Date(startDate).getFullYear()}`
 
-			return res.status(200).json(attachmentSession)
-		}
-		catch (e){
-			return res.status(500).json({error: 'Something went wrong'})
-		}
-	})
+    const code = short.generate()
+    const attachmentSession = await AttachmentPeriod.create({
+      startingMonth: startDate,
+      endingMonth: endDate,
+      cohort,
+      code,
+      lecturers,
+    })
+
+    return res.status(200).json(attachmentSession)
+  } catch (e) {
+    return res.status(500).json({ error: 'Something went wrong' })
+  }
+})
