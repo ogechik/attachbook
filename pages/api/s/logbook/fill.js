@@ -1,5 +1,6 @@
 import connectDb from '../../../../models/connection/connectDb'
 import LogBook from '../../../../models/logBook'
+import User from '../../../../models/user'
 import handler from '../../../../utils/handler'
 
 export default handler([4]).post(async (req, res) => {
@@ -18,7 +19,7 @@ export default handler([4]).post(async (req, res) => {
       const updatedLogbook = await logbook.save()
 
       const updatedPopulated = await LogBook.populate(updatedLogbook, [
-        { path: 'student', model: 'User', select: 'firstName lastName' },
+        { path: 'student', model: User, select: 'firstName lastName' },
       ])
 
       if (updatedPopulated) {

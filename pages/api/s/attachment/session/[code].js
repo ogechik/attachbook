@@ -1,5 +1,6 @@
 import connectDb from '../../../../../models/connection/connectDb'
 import AttachmentPeriod from '../../../../../models/attachmentPeriod'
+import User from '../../../../../models/user'
 import handler from '../../../../../utils/handler'
 
 export default handler([4]).get(async (req, res) => {
@@ -9,7 +10,7 @@ export default handler([4]).get(async (req, res) => {
 
     const attachmentSession = await AttachmentPeriod.findOne({ code })
       .lean()
-      .populate([{ path: 'lecturers', model: 'User' }])
+      .populate([{ path: 'lecturers', model: User }])
 
     if (attachmentSession) {
       return res.status(200).json(attachmentSession)

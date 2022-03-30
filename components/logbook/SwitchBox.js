@@ -55,8 +55,8 @@ export default function SwitchBox({ logbook, week, setWeek, setLogbook }) {
           Attachment Week {week + 1}
         </Text>
       </Row>
-      <Row gutter={16}>
-        <Col span={12}>
+      <Row gutter={32}>
+        <Col xs={{ span: 12 }} lg={{ span: 6 }}>
           {week !== 0 && (
             <Button
               type="default"
@@ -72,7 +72,7 @@ export default function SwitchBox({ logbook, week, setWeek, setLogbook }) {
             </Button>
           )}
         </Col>
-        <Col span={12}>
+        <Col xs={{ span: 12 }} lg={{ span: 6 }}>
           {week !== logbook.report.length - 1 && (
             <Button
               type="default"
@@ -113,11 +113,7 @@ export default function SwitchBox({ logbook, week, setWeek, setLogbook }) {
                   <Button key="back" onClick={handleCancel}>
                     No, Return
                   </Button>,
-                  <Button
-                    type="primary"
-                    // loading={loading}
-                    onClick={handleOk}
-                  >
+                  <Button type="primary" onClick={handleOk}>
                     Yes, Create new week
                   </Button>,
                 ]}

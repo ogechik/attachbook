@@ -16,11 +16,11 @@ import StudentNav from '../../components/student/navigation'
 const { Title, Text } = Typography
 const { Option } = Select
 
-export default function StudentHome({ cookie }) {
+export default function StudentHome({ cookie, attachment }) {
   const router = useRouter()
   const [attachmentSession, setAttachmentSession] = useState(null)
   const [gettingSession, setGettingSession] = useState(false)
-  const [settingUpAttachment, setSetttingUpAttachment] = useState(false)
+  const [settingUpAttachment, setSettingUpAttachment] = useState(false)
   const onFinishCode = (value) => getAttachmentSession(value)
   const onFinishSetup = (values) => setupAttachment(values)
 
@@ -47,7 +47,7 @@ export default function StudentHome({ cookie }) {
       attachmentPeriod: attachmentSession._id,
     }
 
-    setSetttingUpAttachment(true)
+    setSettingUpAttachment(true)
 
     const response = await fetch('/api/s/attachment/session/setup', {
       headers: {
@@ -60,12 +60,12 @@ export default function StudentHome({ cookie }) {
     })
 
     if (response.status === 201) {
-      setSetttingUpAttachment(false)
+      setSettingUpAttachment(false)
       message.success('Attachment setup successful')
       await router.push('/student/logbook')
     } else {
       const data = await response.json()
-      setSetttingUpAttachment(false)
+      setSettingUpAttachment(false)
       message.info(data.error)
     }
   }
@@ -73,13 +73,52 @@ export default function StudentHome({ cookie }) {
   return (
     <>
       <StudentNav />
+      {attachment && (
+        <section>
+          <Row justify="center">
+            <Title level={4}>Attachment Session Details</Title>
+          </Row>
+          <Divider />
+          <Row justify="start">
+            <Col xs={{ span: 22, offset: 1 }} lg={{ span: 6, offset: 9 }}>
+              <Text strong>Cohort : </Text>
+              <span>{attachment?.attachmentPeriod?.cohort}</span>
+              <br />
+              <br />
+              <Text strong>Student : </Text>
+              <span>
+                {`${attachment?.student?.firstName} ${attachment?.student?.lastName}`}
+              </span>
+              <br />
+              <br />
+              <Text strong>Lecturer : </Text>
+              <span>
+                {`${attachment?.lecturer?.firstName} ${attachment?.lecturer?.lastName}`}
+              </span>
+              <br />
+              <br />
+              <Text strong>Supervisor : </Text>
+              <span>
+                {`${attachment?.supervisor?.firstName} ${attachment?.supervisor?.lastName}`}
+              </span>
+              <br />
+              <br />
+            </Col>
+          </Row>
+        </section>
+      )}
 
       <section>
-        <Row justify="center">
-          <Title level={4}>Attachment Session Setup</Title>
-        </Row>
-        <Divider />
-        {!attachmentSession && (
+        {!attachment && (
+          <>
+            <Row justify="center">
+              <Title level={4}>Attachment Session Setup</Title>
+            </Row>
+            <Divider />
+          </>
+        )}
+
+        {!attachmentSession && !attachment && (
           <Row justify="center">
             <Col xs={{ span: 22 }} lg={{ span: 6 }}>
               <Form onFinish={onFinishCode} layout="vertical">
@@ -181,8 +220,25 @@ export default function StudentHome({ cookie }) {
 
 export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
+  if (!cookie) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    }
+  }
+  const response = await fetch(`${process.env.DOMAIN}/api/s/attachment`, {
+    headers: { cookie },
+  })
 
+  if (response.status === 200) {
+    const attachment = await response.json()
+    return {
+      props: { cookie, attachment },
+    }
+  }
   return {
-    props: { cookie },
+    props: { cookie, attachment: null },
   }
 }

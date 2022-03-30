@@ -4,7 +4,7 @@ import StudentNav from '../../components/student/navigation'
 import Logbox from '../../components/logbook/Logbox'
 import ReviewBox from '../../components/logbook/ReviewBox'
 import SwitchBox from '../../components/logbook/SwitchBox'
-const { Title, Text } = Typography
+const { Text } = Typography
 const { TabPane } = Tabs
 const { Panel } = Collapse
 
@@ -90,6 +90,14 @@ export default function StudentHome({ book, cookie }) {
 
 export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
+  if (!cookie) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    }
+  }
 
   const response = await fetch(`${process.env.DOMAIN}/api/s/logbook`, {
     headers: { cookie },
