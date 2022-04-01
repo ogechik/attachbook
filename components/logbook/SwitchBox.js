@@ -31,6 +31,7 @@ export default function SwitchBox({ logbook, week, setWeek, setLogbook }) {
       setCreating(false)
       setLogbook(data)
       await router.replace(router.asPath)
+      toNextWeek()
     } else {
       message.info(data.error)
       setCreating(false)
@@ -49,7 +50,7 @@ export default function SwitchBox({ logbook, week, setWeek, setLogbook }) {
   }
 
   return (
-    <>
+    <section style={{ marginBottom: '1rem' }}>
       <Row align="middle">
         <Text strong style={{ marginBottom: '0.5rem' }}>
           Attachment Week {week + 1}
@@ -124,6 +125,6 @@ export default function SwitchBox({ logbook, week, setWeek, setLogbook }) {
           )}
         </Col>
       </Row>
-    </>
+    </section>
   )
 }

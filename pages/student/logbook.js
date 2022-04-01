@@ -41,7 +41,7 @@ export default function StudentHome({ book, cookie }) {
               </Text>
             </Col>
             <Col span={24}>
-              <Text>{logbook.registrationNo}</Text>
+              <Text>{logbook.registrationNo.toUpperCase()}</Text>
             </Col>
             <Col span={24} style={{ marginTop: '1.25rem' }}>
               <SwitchBox
@@ -71,7 +71,7 @@ export default function StudentHome({ book, cookie }) {
                     ))}
                   </Collapse>
                 </TabPane>
-                <TabPane tab="Reviews" key="2">
+                <TabPane tab="Weekly Reviews" key="2">
                   <ReviewBox
                     logbookId={logbook._id}
                     reportId={report._id}
