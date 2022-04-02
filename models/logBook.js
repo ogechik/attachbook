@@ -36,14 +36,15 @@ const ReportSchema = new mongoose.Schema({
 
 const LogBookSchema = new mongoose.Schema({
   report: [ReportSchema],
-  comment: CommentSchema,
+  firstComment: CommentSchema,
+  finalComment: CommentSchema,
   student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
     unique: true,
   },
-  registrationNo: { type: String, required: true, default: 'SCT221-0000/2000' },
+  registrationNo: { type: String, required: true, default: 'SCT000-0000/0000' },
 })
 
 export default mongoose.models.LogBook ||

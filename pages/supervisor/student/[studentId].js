@@ -1,13 +1,4 @@
-import {
-  Typography,
-  Row,
-  Col,
-  Tabs,
-  Collapse,
-  Alert,
-  Button,
-  Divider,
-} from 'antd'
+import { Typography, Row, Col, Tabs, Alert, Button, Divider } from 'antd'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import SupervisorNav from '../../../components/supervisor/navigation'
@@ -16,7 +7,6 @@ import ReviewNode from '../../../components/supervisor/ReviewNode'
 import { capitalize } from '../../../utils/common'
 const { Text } = Typography
 const { TabPane } = Tabs
-const { Panel } = Collapse
 
 export default function StudentLogbook({ book }) {
   const router = useRouter()
@@ -30,18 +20,6 @@ export default function StudentLogbook({ book }) {
 
   const toStudentsList = async () => {
     await router.back()
-  }
-
-  const doneIcon = (log) => {
-    if (log.log) {
-      return (
-        <span>
-          <img src="/check.svg" alt="done" />
-        </span>
-      )
-    }
-
-    return null
   }
 
   return (
@@ -86,18 +64,21 @@ export default function StudentLogbook({ book }) {
             <Col span={24}>
               <Tabs defaultActiveKey="1">
                 <TabPane tab="Logs" key="1">
-                  <Collapse defaultActiveKey={['1']}>
-                    {report.logs.map((log) => (
-                      <Panel
-                        header={log.day}
-                        key={log._id}
-                        extra={doneIcon(log)}
-                      >
-                        {log.log && <p>{log.log}</p>}
-                        {!log.log && <Text type="secondary">Not logged</Text>}
-                      </Panel>
-                    ))}
-                  </Collapse>
+                  {report.logs.map((log) => {
+                    if (log.log) {
+                      return (
+                        <Row key={log._id}>
+                          <Col xs={{ span: 24 }}>
+                            <Text strong>{log.day}</Text>
+                          </Col>
+                          <Col xs={{ span: 24 }}>
+                            <p>{log.log}</p>
+                          </Col>
+                        </Row>
+                      )
+                    }
+                    return null
+                  })}
                 </TabPane>
                 <TabPane tab="Weekly Reviews" key="2">
                   {report.review && (
