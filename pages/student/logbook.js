@@ -1,4 +1,4 @@
-import { Typography, Row, Col, Tabs, Collapse } from 'antd'
+import { Typography, Row, Col, Tabs, Collapse, Divider } from 'antd'
 import { useEffect, useState } from 'react'
 import StudentNav from '../../components/student/navigation'
 import Logbox from '../../components/logbook/Logbox'
@@ -8,7 +8,7 @@ const { Text } = Typography
 const { TabPane } = Tabs
 const { Panel } = Collapse
 
-export default function StudentHome({ book, cookie }) {
+export default function StudentHome({ book }) {
   const [logbook, setLogbook] = useState(book)
   const [week, setWeek] = useState(logbook.report.length - 1)
   const [report, setReport] = useState(logbook.report[week])
@@ -78,6 +78,33 @@ export default function StudentHome({ book, cookie }) {
                     setLogbook={setLogbook}
                     review={report?.review?.reviewText}
                   />
+                </TabPane>
+                <TabPane tab="Lecturer Comments" key="3">
+                  <Row>
+                    <Col>
+                      <Text strong>First visit comments</Text>
+                      <p>
+                        {logbook.firstComment ? (
+                          logbook.firstComment.comment
+                        ) : (
+                          <Text type="secondary">-</Text>
+                        )}
+                      </p>
+                    </Col>
+                  </Row>
+                  <Divider />
+                  <Row>
+                    <Col>
+                      <Text strong>Final comments</Text>
+                      <p>
+                        {logbook.finalComment ? (
+                          logbook.finalComment.comment
+                        ) : (
+                          <Text type="secondary">-</Text>
+                        )}
+                      </p>
+                    </Col>
+                  </Row>
                 </TabPane>
               </Tabs>
             </Col>

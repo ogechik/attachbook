@@ -3,7 +3,7 @@ import LogBook from '../../../../../models/logBook'
 import User from '../../../../../models/user'
 import handler from '../../../../../utils/handler'
 
-export default handler([2]).get(async (req, res) => {
+export default handler([1, 2]).get(async (req, res) => {
   try {
     const { studentId } = req.query
 

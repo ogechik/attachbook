@@ -1,4 +1,4 @@
-import { Typography, Alert, List, Avatar, Row, Button, Col } from 'antd'
+import { Typography, Alert, List, Row, Button, Col } from 'antd'
 import { useRouter } from 'next/router'
 import SupervisorNav from '../../components/supervisor/navigation'
 import { capitalize, getMonthsDays } from '../../utils/common'
