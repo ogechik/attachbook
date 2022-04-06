@@ -62,6 +62,7 @@ export default function AdminLayout({ children, title }) {
               mode="inline"
             >
               <Menu.Item key="sessions">Attachment Sessions</Menu.Item>
+              <Menu.Item key="students">Students</Menu.Item>
               <Menu.Item key="lecturers">Lecturers</Menu.Item>
               <Menu.Item key="supervisors">Supervisors</Menu.Item>
               <Menu.Item key="companies">Companies</Menu.Item>
