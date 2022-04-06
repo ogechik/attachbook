@@ -1,6 +1,7 @@
 import hashSalt from '../../../utils/auth/hashSalt'
 import dbConnect from '../../../models/connection/connectDb'
 import User from '../../../models/user'
+import { capitalize } from '../../../utils/common'
 
 export default async (req, res) => {
   const { firstName, lastName, email, role, password } = req.body
@@ -31,8 +32,8 @@ export default async (req, res) => {
 
     const user = new User({
       email: email.toLowerCase(),
-      firstName,
-      lastName,
+      firstName: capitalize(firstName),
+      lastName: capitalize(lastName),
       role,
       hash,
       salt,
