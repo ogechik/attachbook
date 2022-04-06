@@ -1,10 +1,8 @@
-import { Divider, Typography, Row, Col, Button, List } from 'antd'
-import { useRouter } from 'next/router'
+import { Divider, Typography, Row, Col, List } from 'antd'
 import AdminLayout from '../../../components/admin/AdminLayout'
 const { Title, Text } = Typography
-export default function Companies({ lecturers }) {
-  const router = useRouter()
 
+export default function Companies({ lecturers }) {
   return (
     <AdminLayout title="Admin|Home">
       <Row>
@@ -13,64 +11,42 @@ export default function Companies({ lecturers }) {
         </Col>
       </Row>
       <Divider />
-      {/* <Row justify="space-between" align="middle"> */}
-      {/*  <Title level={5}></Title> */}
-      {/*  <Button type="primary" onClick={createPage}> */}
-      {/*    Create New Session */}
-      {/*  </Button> */}
-      {/* </Row> */}
-      {/* <Divider /> */}
-      {/* <Row> */}
-      {/*  <Col span={24}> */}
-      {/*    <List */}
-      {/*      header={ */}
-      {/*        <div> */}
-      {/*          <Row style={{ width: '100%' }}> */}
-      {/*            <Col span={6}> */}
-      {/*              <Text strong>Cohort</Text> */}
-      {/*            </Col> */}
-      {/*            <Col span={6}> */}
-      {/*              <Text strong>No.of Lecturers</Text> */}
-      {/*            </Col> */}
-      {/*            <Col span={6}> */}
-      {/*              <Text strong>Status</Text> */}
-      {/*            </Col> */}
-      {/*            <Col span={6}> */}
-      {/*              <Text strong>Action</Text> */}
-      {/*            </Col> */}
-      {/*          </Row> */}
-      {/*        </div> */}
-      {/*      } */}
-      {/*      footer={ */}
-      {/*        <div> */}
-      {/*          <Text strong>{sessions.length} active sessions</Text> */}
-      {/*        </div> */}
-      {/*      } */}
-      {/*      bordered */}
-      {/*      dataSource={sessions} */}
-      {/*      renderItem={(session) => ( */}
-      {/*        <List.Item> */}
-      {/*          <Row style={{ width: '100%' }}> */}
-      {/*            <Col span={6}>{session.cohort}</Col> */}
-      {/*            <Col span={6}>{session.lecturers.length} Lecturers</Col> */}
-      {/*            <Col span={6}> */}
-      {/*              {session.isActive ? 'active' : 'deactivated'} */}
-      {/*            </Col> */}
-      {/*            <Col span={6}> */}
-      {/*              {' '} */}
-      {/*              <Button */}
-      {/*                type="default" */}
-      {/*                onClick={() => toSession(session._id)} */}
-      {/*              > */}
-      {/*                view */}
-      {/*              </Button> */}
-      {/*            </Col> */}
-      {/*          </Row> */}
-      {/*        </List.Item> */}
-      {/*      )} */}
-      {/*    /> */}
-      {/*  </Col> */}
-      {/* </Row> */}
+
+      <Row>
+        <Col span={24}>
+          <List
+            header={
+              <div>
+                <Row style={{ width: '100%' }}>
+                  <Col span={6}>
+                    <Text strong>Name</Text>
+                  </Col>
+                  <Col span={6}>
+                    <Text strong>Email</Text>
+                  </Col>
+                </Row>
+              </div>
+            }
+            footer={
+              <div>
+                <Text strong>{lecturers.length} lecturer(s)</Text>
+              </div>
+            }
+            bordered
+            dataSource={lecturers}
+            renderItem={(lecturer) => (
+              <List.Item>
+                <Row style={{ width: '100%' }}>
+                  <Col span={6}>
+                    {`${lecturer.firstName} ${lecturer.lastName}`}
+                  </Col>
+                  <Col span={6}>{lecturer.email}</Col>
+                </Row>
+              </List.Item>
+            )}
+          />
+        </Col>
+      </Row>
     </AdminLayout>
   )
 }
@@ -86,17 +62,14 @@ export async function getServerSideProps(context) {
     }
   }
 
-  const response = await fetch(
-    `${process.env.DOMAIN}/api/a/attachment/session/get/0`,
-    {
-      headers: { cookie },
-    },
-  )
+  const response = await fetch(`${process.env.DOMAIN}/api/a/lecturers`, {
+    headers: { cookie },
+  })
   if (response.status === 200) {
-    const sessions = await response.json()
+    const lecturers = await response.json()
     return {
       props: {
-        sessions,
+        lecturers,
       },
     }
   }
@@ -111,7 +84,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      sessions: null,
+      lecturers: [],
     },
   }
 }
