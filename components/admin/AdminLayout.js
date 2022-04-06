@@ -12,6 +12,9 @@ export default function AdminLayout({ children, title }) {
       case 'sessions':
         await router.push('/4dm1n/dash')
         break
+      case 'students':
+        await router.push('/4dm1n/students')
+        break
       case 'lecturers':
         await router.push('/4dm1n/lecturers')
         break
