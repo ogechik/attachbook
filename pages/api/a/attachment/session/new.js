@@ -25,7 +25,7 @@ export default handler([0]).post(async (req, res) => {
     ]
 
     const cohort = `${months[new Date(startDate).getMonth()]}-${
-      months[new Date().getMonth(endDate)]
+      months[new Date(endDate).getMonth()]
     }/${new Date(startDate).getFullYear()}`
 
     const code = short.generate()
@@ -37,7 +37,7 @@ export default handler([0]).post(async (req, res) => {
       lecturers,
     })
 
-    return res.status(200).json(attachmentSession)
+    return res.status(201).json(attachmentSession)
   } catch (e) {
     return res.status(500).json({ error: 'Something went wrong' })
   }
