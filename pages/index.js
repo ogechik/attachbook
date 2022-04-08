@@ -1,6 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Row, Col, Button, Input, Typography, Form, message } from 'antd'
+import {
+  Row,
+  Col,
+  Button,
+  Input,
+  Typography,
+  Form,
+  message,
+  Divider,
+} from 'antd'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Layout from '../components/Layout'
@@ -107,7 +116,14 @@ export default function Home() {
                   Log in
                 </Button>
               </Form.Item>
-              Or <Link href="/auth/register">register now!</Link>
+              <Link href="/forgot" style={{ marginTop: '2rem' }}>
+                Forgot Password?
+              </Link>
+              <Divider />
+              Or{' '}
+              <Link href="/auth/register" style={{ marginBottom: '2rem' }}>
+                register now!
+              </Link>
             </Form>
           </Col>
         </Row>
