@@ -17,6 +17,7 @@
     "less-loader": "^10.2.0",
     "mongoose": "^6.2.4",
     "next": "12.1.0",
+    "next-compose-plugins": "^2.2.1",
     "next-connect": "^0.12.2",
     "next-with-less": "^2.0.5",
     "react": "17.0.2",
