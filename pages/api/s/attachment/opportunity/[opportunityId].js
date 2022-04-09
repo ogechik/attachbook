@@ -1,6 +1,7 @@
 import connectDb from '../../../../../models/connection/connectDb'
 import AttachmentOpportunity from '../../../../../models/attachmentOpportunity'
 import handler from '../../../../../utils/handler'
+import User from '../../../../../models/user'
 
 export default handler([3, 4]).get(async (req, res) => {
   try {
@@ -8,7 +9,11 @@ export default handler([3, 4]).get(async (req, res) => {
 
     await connectDb()
 
-    const opportunity = await AttachmentOpportunity.findById(opportunityId)
+    const opportunity = await AttachmentOpportunity.findById(
+      opportunityId,
+    ).populate([
+      { path: 'postedBy', model: User, select: 'firstName lastName' },
+    ])
 
     if (opportunity) {
       return res.status(200).json(opportunity)

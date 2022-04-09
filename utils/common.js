@@ -36,3 +36,26 @@ function dateDiffInDays(a, b) {
   const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
   return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
+
+export function formatDate(isoDate) {
+  const months = [
+    'JAN',
+    'FEB',
+    'MAR',
+    'APR',
+    'MAY',
+    'JUN',
+    'JUL',
+    'AUG',
+    'SEP',
+    'OCT',
+    'NOV',
+    'DEC',
+  ]
+  const formatted = new Date(isoDate)
+  const year = formatted.getFullYear()
+  const month = months[formatted.getMonth()]
+  const day = formatted.getDate()
+
+  return `${day.toString()}TH ${month} ${year.toString()}`
+}
