@@ -78,13 +78,11 @@ export default function StudentHome({ book }) {
                     setLogbook={setLogbook}
                     review={report?.review?.reviewText}
                   />
-                  <Divider/>
-                  {logbook.supervisorReview && (
+                  <Divider />
+                  {report.supervisorReview && (
                     <>
                       <Text strong>Supervisor's Review</Text>
-                      {logbook.supervisorReview.reviewText && (
-                        <p>{logbook.supervisorReview.reviewText}</p>
-                      )}
+                      <p>{report?.supervisorReview?.reviewText}</p>
                     </>
                   )}
                 </TabPane>
