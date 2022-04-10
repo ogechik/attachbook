@@ -1,6 +1,6 @@
 {
   "extends": [
-//    "@imaginary-cloud/react",
+    "@imaginary-cloud/react",
     "eslint:recommended",
     "next"],
   "rules": {
