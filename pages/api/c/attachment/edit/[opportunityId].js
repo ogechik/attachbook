@@ -1,22 +1,24 @@
-import connectDb from '../../../../models/connection/connectDb'
-import AttachmentOpportunity from '../../../../models/attachmentOpportunity'
-import handler from '../../../../utils/handler'
+import connectDb from '../../../../../models/connection/connectDb'
+import AttachmentOpportunity from '../../../../../models/attachmentOpportunity'
+import handler from '../../../../../utils/handler'
 
 export default handler([3]).post(async (req, res) => {
   try {
-    const { attachmentOpportunityId } = req.body
+    const { position, responsibilities, applyInstructions } = req.body
+    const { opportunityId } = req.query
 
     await connectDb()
 
     const attachmentOpportunity = await AttachmentOpportunity.findById(
-      attachmentOpportunityId,
+      opportunityId,
     )
-
     if (attachmentOpportunity) {
-      attachmentOpportunity.isArchived = true
+      attachmentOpportunity.position = position
+      attachmentOpportunity.responsibilities = responsibilities
+      attachmentOpportunity.applyInstructions = applyInstructions
       const updatedAttachmentOpportunity = await attachmentOpportunity.save()
       if (updatedAttachmentOpportunity) {
-        return res.status(204).json(updatedAttachmentOpportunity)
+        return res.status(200).json(updatedAttachmentOpportunity)
       }
       return res
         .status(200)

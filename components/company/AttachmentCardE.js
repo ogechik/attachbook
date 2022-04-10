@@ -3,11 +3,11 @@ import { useRouter } from 'next/router'
 import styles from './card.module.css'
 import { formatDate } from '../../utils/common'
 
-export default function AttachmentCard({ opportunity }) {
+export default function AttachmentCardE({ opportunity }) {
   const router = useRouter()
 
   const toOpportunity = async (id) => {
-    await router.push(`/student/opportunity/${id}`)
+    await router.push(`/company/opportunities/${id}`)
   }
   return (
     <Row className={styles.card}>
@@ -27,7 +27,7 @@ export default function AttachmentCard({ opportunity }) {
           <p className={styles.posted}>POSTED ON</p>
           <p>{formatDate(opportunity.datePosted)}</p>
           <Button type="primary" onClick={() => toOpportunity(opportunity._id)}>
-            read more
+            edit
           </Button>
         </div>
       </Col>

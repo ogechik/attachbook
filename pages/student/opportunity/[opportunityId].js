@@ -1,6 +1,7 @@
 import { Typography, Row, Col, Divider } from 'antd'
 import StudentNav from '../../../components/student/navigation'
 import Layout from '../../../components/Layout'
+import GoBack from '../../../components/admin/GoBack'
 const { Title, Text } = Typography
 
 export default function Opportunities({ opportunity }) {
@@ -8,6 +9,13 @@ export default function Opportunities({ opportunity }) {
     <Layout title={opportunity.position}>
       <StudentNav />
       <Row justify="start">
+        <Col
+          lg={{ offset: 6, span: 18 }}
+          xs={{ offset: 1, span: 22 }}
+          style={{ marginBottom: '1rem' }}
+        >
+          <GoBack />
+        </Col>
         <Col xs={{ span: 22, offset: 1 }} lg={{ span: 12, offset: 6 }}>
           <Title level={3}>{opportunity.position}</Title>
         </Col>
