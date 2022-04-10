@@ -99,7 +99,7 @@ export default function Opportunities({ opportunity }) {
               onCancel={handleCancel}
               footer={[
                 <Button key="back" onClick={handleCancel}>
-                  No, Cancel
+                  Cancel
                 </Button>,
                 <Button type="primary" onClick={archive} loading={deleting}>
                   Yes, Remove opportunity
