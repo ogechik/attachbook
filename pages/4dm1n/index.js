@@ -23,7 +23,6 @@ export default function AdminLogin() {
     })
 
     if (response.status === 200) {
-      const data = await response.json()
       setLoading(false)
       await router.push('/4dm1n/dash')
     } else if (response.status === 404) {

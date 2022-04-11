@@ -155,34 +155,27 @@ export async function getServerSideProps(context) {
   const { sessionId } = context.params
   const { cookie } = context.req.headers
 
-  if (!cookie) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    }
-  }
-
   const response = await fetch(
     `${process.env.DOMAIN}/api/a/attachment/session/${sessionId}`,
     {
       headers: { cookie },
     },
   )
-  if (response.status === 200) {
-    const data = await response.json()
-    return {
-      props: {
-        data,
-      },
-    }
-  }
+
   if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
         destination: '/4dm1n',
+      },
+    }
+  }
+
+  if (response.status === 200) {
+    const data = await response.json()
+    return {
+      props: {
+        data,
       },
     }
   }

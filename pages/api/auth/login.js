@@ -37,7 +37,7 @@ export default async (req, res) => {
         lastName: user.lastName,
       },
       process.env.JWT_SECRET,
-      { expiresIn: '1d' },
+      { expiresIn: '7d' },
     )
 
     if (token) {
@@ -47,7 +47,7 @@ export default async (req, res) => {
           httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',
           sameSite: 'strict',
-          maxAge: 3600,
+          maxAge: 604800, // 7days
           path: '/',
         }),
       )
@@ -55,6 +55,7 @@ export default async (req, res) => {
         .status(200)
         .json({ message: 'successful login', role: user.role })
     }
+    return res.status(401).json({ error: 'token error' })
   } catch (err) {
     return res.status(500).json({ error: 'something went wrong' })
   }

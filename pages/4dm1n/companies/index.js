@@ -53,31 +53,25 @@ export default function Companies({ companies }) {
 
 export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
-  if (!cookie) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    }
-  }
 
   const response = await fetch(`${process.env.DOMAIN}/api/a/companies`, {
     headers: { cookie },
   })
-  if (response.status === 200) {
-    const companies = await response.json()
-    return {
-      props: {
-        companies,
-      },
-    }
-  }
+
   if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
         destination: '/4dm1n',
+      },
+    }
+  }
+
+  if (response.status === 200) {
+    const companies = await response.json()
+    return {
+      props: {
+        companies,
       },
     }
   }

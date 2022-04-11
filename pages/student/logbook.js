@@ -137,6 +137,15 @@ export async function getServerSideProps(context) {
     headers: { cookie },
   })
 
+  if (response.status === 401) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    }
+  }
+
   const book = await response.json()
 
   return {

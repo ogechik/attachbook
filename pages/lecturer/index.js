@@ -83,7 +83,12 @@ export default function SupervisorHome({ students }) {
 
 export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
-  if (!cookie) {
+
+  const response = await fetch(`${process.env.DOMAIN}/api/su/students/0`, {
+    headers: { cookie },
+  })
+
+  if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
@@ -91,10 +96,6 @@ export async function getServerSideProps(context) {
       },
     }
   }
-
-  const response = await fetch(`${process.env.DOMAIN}/api/su/students/0`, {
-    headers: { cookie },
-  })
 
   if (response.status === 200) {
     const students = await response.json()

@@ -53,31 +53,25 @@ export default function Companies({ students }) {
 
 export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
-  if (!cookie) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    }
-  }
 
   const response = await fetch(`${process.env.DOMAIN}/api/a/students`, {
     headers: { cookie },
   })
-  if (response.status === 200) {
-    const students = await response.json()
-    return {
-      props: {
-        students,
-      },
-    }
-  }
+
   if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
         destination: '/4dm1n',
+      },
+    }
+  }
+
+  if (response.status === 200) {
+    const students = await response.json()
+    return {
+      props: {
+        students,
       },
     }
   }

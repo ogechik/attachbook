@@ -176,7 +176,14 @@ export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
   const { studentId } = context.params
 
-  if (!cookie) {
+  const response = await fetch(
+    `${process.env.DOMAIN}/api/su/student/logbook/${studentId}`,
+    {
+      headers: { cookie },
+    },
+  )
+
+  if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
@@ -184,13 +191,6 @@ export async function getServerSideProps(context) {
       },
     }
   }
-
-  const response = await fetch(
-    `${process.env.DOMAIN}/api/su/student/logbook/${studentId}`,
-    {
-      headers: { cookie },
-    },
-  )
 
   const book = await response.json()
 

@@ -1,8 +1,8 @@
 {
   "extends": [
     "@imaginary-cloud/react",
-    "eslint:recommended",
-    "next"
+//    "eslint:recommended",
+//    "next"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",

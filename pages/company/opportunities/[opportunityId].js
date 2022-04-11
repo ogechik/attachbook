@@ -183,7 +183,14 @@ export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
   const { opportunityId } = context.params
 
-  if (!cookie) {
+  const response = await fetch(
+    `${process.env.DOMAIN}/api/s/attachment/opportunity/${opportunityId}`,
+    {
+      headers: { cookie },
+    },
+  )
+
+  if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
@@ -191,13 +198,6 @@ export async function getServerSideProps(context) {
       },
     }
   }
-
-  const response = await fetch(
-    `${process.env.DOMAIN}/api/s/attachment/opportunity/${opportunityId}`,
-    {
-      headers: { cookie },
-    },
-  )
 
   const opportunity = await response.json()
 

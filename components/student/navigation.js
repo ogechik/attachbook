@@ -1,4 +1,4 @@
-import { Menu, Typography, Row, Col, Drawer, Button } from 'antd'
+import { Menu, Typography, Row, Col, Drawer, Button, message } from 'antd'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
@@ -24,6 +24,16 @@ export default function StudentNav() {
   const handleClick = (e) => {
     setCurrent(e.key)
     setVisible(false)
+  }
+
+  const logout = async () => {
+    const response = await fetch('/api/auth/logout')
+    if (response.status === 204) {
+      message.success('logged out')
+      await router.replace('/')
+    } else {
+      message.error('something went wrong')
+    }
   }
 
   return (
@@ -86,10 +96,7 @@ export default function StudentNav() {
                     </Button>
                   </Menu.Item>
                   <Menu.Item key="logout">
-                    <Button
-                      type="text"
-                      onClick={() => changePage('/student/attachments')}
-                    >
+                    <Button type="text" onClick={logout}>
                       Logout
                     </Button>
                   </Menu.Item>
@@ -164,10 +171,7 @@ export default function StudentNav() {
                   </Button>
                 </Menu.Item>
                 <Menu.Item key="logout">
-                  <Button
-                    type="text"
-                    onClick={() => changePage('/student/attachments')}
-                  >
+                  <Button type="text" onClick={logout}>
                     Logout
                   </Button>
                 </Menu.Item>

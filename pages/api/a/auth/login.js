@@ -47,11 +47,11 @@ export default async (req, res) => {
     if (token) {
       res.setHeader(
         'Set-Cookie',
-        cookie.serialize('auth', token, {
+        cookie.serialize('auth_admin', token, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== 'development',
           sameSite: 'strict',
-          maxAge: 3600,
+          maxAge: 86400,
           path: '/',
         }),
       )

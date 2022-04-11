@@ -82,14 +82,6 @@ export default function Dash({ sessions }) {
 
 export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
-  if (!cookie) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/',
-      },
-    }
-  }
 
   const response = await fetch(
     `${process.env.DOMAIN}/api/a/attachment/session/get/0`,
@@ -97,19 +89,21 @@ export async function getServerSideProps(context) {
       headers: { cookie },
     },
   )
-  if (response.status === 200) {
-    const sessions = await response.json()
-    return {
-      props: {
-        sessions,
-      },
-    }
-  }
+
   if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
         destination: '/4dm1n',
+      },
+    }
+  }
+
+  if (response.status === 200) {
+    const sessions = await response.json()
+    return {
+      props: {
+        sessions,
       },
     }
   }

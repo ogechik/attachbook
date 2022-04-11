@@ -16,7 +16,7 @@ import StudentNav from '../../components/student/navigation'
 const { Title, Text } = Typography
 const { Option } = Select
 
-export default function StudentHome({ cookie, attachment }) {
+export default function StudentHome({ attachment }) {
   const router = useRouter()
   const [attachmentSession, setAttachmentSession] = useState(null)
   const [gettingSession, setGettingSession] = useState(false)
@@ -26,9 +26,7 @@ export default function StudentHome({ cookie, attachment }) {
 
   const getAttachmentSession = async (value) => {
     setGettingSession(true)
-    const response = await fetch(`/api/s/attachment/session/${value.code}`, {
-      headers: { cookie },
-    })
+    const response = await fetch(`/api/s/attachment/session/${value.code}`)
     if (response.status === 200) {
       const data = await response.json()
       setAttachmentSession(data)
@@ -53,7 +51,6 @@ export default function StudentHome({ cookie, attachment }) {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        cookie,
       },
       method: 'post',
       body: JSON.stringify(attachmentDetails),
@@ -220,7 +217,12 @@ export default function StudentHome({ cookie, attachment }) {
 
 export async function getServerSideProps(context) {
   const { cookie } = context.req.headers
-  if (!cookie) {
+
+  const response = await fetch(`${process.env.DOMAIN}/api/s/attachment`, {
+    headers: { cookie },
+  })
+
+  if (response.status === 401) {
     return {
       redirect: {
         permanent: false,
@@ -228,17 +230,15 @@ export async function getServerSideProps(context) {
       },
     }
   }
-  const response = await fetch(`${process.env.DOMAIN}/api/s/attachment`, {
-    headers: { cookie },
-  })
 
   if (response.status === 200) {
     const attachment = await response.json()
     return {
-      props: { cookie, attachment },
+      props: { attachment },
     }
   }
+
   return {
-    props: { cookie, attachment: null },
+    props: { attachment: null },
   }
 }
