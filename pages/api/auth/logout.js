@@ -9,7 +9,7 @@ export default async (req, res) => {
       }),
     ])
 
-    return res.status(204).json({ msg: 'logged out' })
+    return res.status(200).json({ msg: 'logged out' })
   } catch (e) {
     return res.status(500).json({ error: 'something went wrong' })
   }

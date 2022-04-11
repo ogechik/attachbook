@@ -13,7 +13,7 @@ export default function AdminLogin() {
 
   const adminLogin = async (credentials) => {
     setLoading(true)
-    const response = await fetch('/api/a/auth/login', {
+    const response = await fetch('/api/auth/login', {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

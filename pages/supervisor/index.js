@@ -23,7 +23,7 @@ export default function SupervisorHome({ students }) {
 
   return (
     <>
-      <SupervisorNav />
+      <SupervisorNav supervisor="supervisor" />
       <Row>
         <Col lg={{ offset: 6 }} xs={{ offset: 1 }}>
           <Title level={3}>Students</Title>

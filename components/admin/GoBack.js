@@ -7,8 +7,12 @@ export default function GoBack() {
     await router.back()
   }
   return (
-    <Button type="default" onClick={previousPage}>
+    <Button type="default" onClick={previousPage} icon={<BackIcon />}>
       Go Back
     </Button>
   )
+}
+
+function BackIcon() {
+  return <img src="/arrow-left.svg" alt="<" />
 }

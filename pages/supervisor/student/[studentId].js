@@ -24,7 +24,7 @@ export default function StudentLogbook({ book }) {
 
   return (
     <>
-      <SupervisorNav />
+      <SupervisorNav supervisor="supervisor" />
       <Row style={{ marginBottom: '2rem' }}>
         <Col xs={{ span: 22, offset: 1 }} lg={{ span: 16, offset: 4 }}>
           <Button

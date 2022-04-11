@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { Row, Col, Menu, Typography } from 'antd'
+import { Row, Col, Menu, Typography, message } from 'antd'
 import { useRouter } from 'next/router'
 const { Title } = Typography
 
@@ -24,8 +24,21 @@ export default function AdminLayout({ children, title }) {
       case 'companies':
         await router.push('/4dm1n/companies')
         break
+      case 'logout':
+        await logout()
+        break
       default:
         await router.push('/4dm1n/dash')
+    }
+  }
+
+  const logout = async () => {
+    const response = await fetch('/api/auth/logout')
+    if (response.status === 200) {
+      message.success('logged out')
+      await router.replace('/4dm1n')
+    } else {
+      message.error('something went wrong')
     }
   }
 

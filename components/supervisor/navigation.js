@@ -1,13 +1,14 @@
-import { Menu, Typography, Row, Col, Drawer, Button } from 'antd'
+import { Menu, Typography, Row, Col, Drawer, Button, message } from 'antd'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../student/navbar.module.css'
+import UserIcon from '../general/UserIcon'
 
 const { Title } = Typography
 const { SubMenu } = Menu
 
-export default function SupervisorNav() {
+export default function SupervisorNav({ supervisor }) {
   const router = useRouter()
   const [current, setCurrent] = useState('')
   const [visible, setVisible] = useState(false)
@@ -27,13 +28,23 @@ export default function SupervisorNav() {
     setVisible(false)
   }
 
+  const logout = async () => {
+    const response = await fetch('/api/auth/logout')
+    if (response.status === 200) {
+      message.success('logged out')
+      await router.replace('/')
+    } else {
+      message.error('something went wrong')
+    }
+  }
+
   return (
     <>
       <nav className={styles.bigMenu}>
         <Row justify="center">
           <Col span={6}>
             <div style={{ display: 'flex', paddingTop: '0.75rem' }}>
-              <a href="/">
+              <a href={`/${supervisor}`}>
                 <Image
                   src="/logo-sm.svg"
                   alt="attachbook logo"
@@ -67,21 +78,18 @@ export default function SupervisorNav() {
                   Students
                 </Button>
               </Menu.Item>
-              <SubMenu key="SubMenu" title="Profile">
+              <SubMenu key="SubMenu" title={<UserIcon />}>
                 <Menu.ItemGroup title="Actions">
                   <Menu.Item key="profile">
                     <Button
                       type="text"
                       onClick={() => changePage('/supervisor/students')}
                     >
-                      My Details
+                      Profile
                     </Button>
                   </Menu.Item>
                   <Menu.Item key="logout">
-                    <Button
-                      type="text"
-                      onClick={() => changePage('/supervisor/students')}
-                    >
+                    <Button type="text" onClick={logout}>
                       Logout
                     </Button>
                   </Menu.Item>
@@ -148,10 +156,7 @@ export default function SupervisorNav() {
                   </Button>
                 </Menu.Item>
                 <Menu.Item key="logout">
-                  <Button
-                    type="text"
-                    onClick={() => changePage('/supervisor/students')}
-                  >
+                  <Button type="text" onClick={logout}>
                     Logout
                   </Button>
                 </Menu.Item>

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from './navbar.module.css'
+import UserIcon from '../general/UserIcon'
 const { Title } = Typography
 const { SubMenu } = Menu
 
@@ -28,7 +29,7 @@ export default function StudentNav() {
 
   const logout = async () => {
     const response = await fetch('/api/auth/logout')
-    if (response.status === 204) {
+    if (response.status === 200) {
       message.success('logged out')
       await router.replace('/')
     } else {
@@ -42,7 +43,7 @@ export default function StudentNav() {
         <Row justify="center">
           <Col span={6}>
             <div style={{ display: 'flex', paddingTop: '0.75rem' }}>
-              <a href="/">
+              <a href="/student">
                 <Image
                   src="/logo-sm.svg"
                   alt="attachbook logo"
@@ -84,7 +85,7 @@ export default function StudentNav() {
                   Attachments
                 </Button>
               </Menu.Item>
-              <SubMenu key="SubMenu" title="John">
+              <SubMenu key="SubMenu" title={<UserIcon />}>
                 <Menu.ItemGroup title="Actions">
                   <Menu.Item key="profile">
                     {' '}
@@ -110,7 +111,7 @@ export default function StudentNav() {
       <nav className={styles.smallMenu}>
         <Row style={{ margin: '0.5rem' }} align="middle">
           <Col span={18}>
-            <a href="/" style={{ display: 'flex' }}>
+            <a href="/student" style={{ display: 'flex' }}>
               <Image
                 src="/logo-sm.svg"
                 alt="attachbook logo"
@@ -133,7 +134,7 @@ export default function StudentNav() {
           </Col>
           <Col span={6}>
             <div className={styles.menuBtn} onClick={showDrawer}>
-              <img src="/menu.svg" height={32} width={32} />
+              <img src="/menu.svg" height={32} width={32} alt="menu" />
             </div>
             <Drawer
               title="Attachbook Menu"
