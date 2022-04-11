@@ -73,7 +73,7 @@ export default function SupervisorNav({ supervisor }) {
               <Menu.Item key="students">
                 <Button
                   type="text"
-                  onClick={() => changePage('/supervisor/students')}
+                  onClick={() => changePage(`/${supervisor}`)}
                 >
                   Students
                 </Button>
@@ -83,7 +83,7 @@ export default function SupervisorNav({ supervisor }) {
                   <Menu.Item key="profile">
                     <Button
                       type="text"
-                      onClick={() => changePage('/supervisor/students')}
+                      onClick={() => changePage(`/${supervisor}`)}
                     >
                       Profile
                     </Button>
