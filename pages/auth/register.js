@@ -137,6 +137,10 @@ export default function Register() {
                         required: true,
                         message: 'Please input your Password!',
                       },
+                      {
+                        min: 8,
+                        message: 'Password must be minimum 8 characters.',
+                      },
                     ]}
                   >
                     <Input.Password />
