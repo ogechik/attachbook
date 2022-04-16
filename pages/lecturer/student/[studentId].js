@@ -6,6 +6,7 @@ import SwitchBox from '../../../components/logbook/SwitchBox'
 import ReviewNode from '../../../components/supervisor/ReviewNode'
 import { capitalize } from '../../../utils/common'
 import CommentBox from '../../../components/logbook/CommentBox'
+import EditCommentBox from '../../../components/logbook/EditCommentBox'
 const { Text } = Typography
 const { TabPane } = Tabs
 
@@ -127,12 +128,12 @@ export default function StudentLogbook({ book }) {
                 </TabPane>
                 <TabPane tab="Lecturer Comments" key="3">
                   {logbook.firstComment && (
-                    <Row>
-                      <Col>
-                        <Text strong>First visit comments</Text>
-                        <p>{logbook.firstComment.comment}</p>
-                      </Col>
-                    </Row>
+                    <EditCommentBox
+                      logbook={logbook}
+                      logbookId={logbook._id}
+                      setLogbook={setLogbook}
+                      commentType="first"
+                    />
                   )}
                   {!logbook.firstComment && (
                     <CommentBox
@@ -144,12 +145,12 @@ export default function StudentLogbook({ book }) {
                   {logbook.finalComment && (
                     <>
                       <Divider />{' '}
-                      <Row>
-                        <Col>
-                          <Text strong>Final comments</Text>
-                          <p>{logbook.finalComment.comment}</p>
-                        </Col>
-                      </Row>
+                      <EditCommentBox
+                        logbook={logbook}
+                        logbookId={logbook._id}
+                        setLogbook={setLogbook}
+                        commentType="final"
+                      />
                     </>
                   )}
                   {logbook.firstComment && !logbook.finalComment && (
