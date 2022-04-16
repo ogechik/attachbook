@@ -1,11 +1,16 @@
-import { Button, Form, Input, message } from 'antd'
+import { Button, Col, Form, Input, message, Row } from 'antd'
 
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import EditReviewBox from './EditReviewBox'
 
-export default function ReviewBox({ review, logbookId, reportId, setLogbook }) {
+export default function EditReviewBox({
+  review,
+  logbookId,
+  reportId,
+  setLogbook,
+}) {
   const router = useRouter()
+  const [editMode, setEditMode] = useState(false)
   const [posting, setPosting] = useState(false)
   const [form] = Form.useForm()
 
@@ -30,8 +35,9 @@ export default function ReviewBox({ review, logbookId, reportId, setLogbook }) {
 
     const data = await response.json()
     if (response.status === 200 && !data.error) {
-      message.success('Review posted')
+      message.success('Review updated')
       setPosting(false)
+      setEditMode((mode) => !mode)
       setLogbook(data)
       await router.replace(router.asPath)
     } else {
@@ -42,8 +48,15 @@ export default function ReviewBox({ review, logbookId, reportId, setLogbook }) {
 
   return (
     <>
-      {!review && (
-        <Form form={form} layout="vertical" onFinish={onFinish}>
+      {editMode && (
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={{
+            review,
+          }}
+          onFinish={onFinish}
+        >
           <Form.Item
             label="Review text"
             name="review"
@@ -63,18 +76,30 @@ export default function ReviewBox({ review, logbookId, reportId, setLogbook }) {
               style={{ width: '30%' }}
               loading={posting}
             >
-              Post
+              Update
+            </Button>
+            <Button
+              style={{ marginLeft: '1rem' }}
+              onClick={() => setEditMode((mode) => !mode)}
+            >
+              Cancel
             </Button>
           </Form.Item>
         </Form>
       )}
-      {review && (
-        <EditReviewBox
-          logbookId={logbookId}
-          reportId={reportId}
-          setLogbook={setLogbook}
-          review={review}
-        />
+      {!editMode && (
+        <Row>
+          <Col span={24}>
+            <p>
+              {review}
+              <Button
+                type="text"
+                onClick={() => setEditMode((mode) => !mode)}
+                icon={<img src="/edit.svg" alt="edit" />}
+              />
+            </p>
+          </Col>
+        </Row>
       )}
     </>
   )

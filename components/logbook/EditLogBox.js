@@ -1,11 +1,11 @@
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input, message, Row, Col } from 'antd'
 
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import EditLogBox from './EditLogBox'
 
-export default function Logbox({ log, logbookId, reportId, setLogbook }) {
+export default function EditLogBox({ log, logbookId, reportId, setLogbook }) {
   const router = useRouter()
+  const [editMode, setEditMode] = useState(false)
   const [posting, setPosting] = useState(false)
   const [form] = Form.useForm()
 
@@ -31,8 +31,9 @@ export default function Logbox({ log, logbookId, reportId, setLogbook }) {
     })
     const data = await response.json()
     if (response.status === 200 && !data.error) {
-      message.success('Log posted')
+      message.success('Log updated')
       setPosting(false)
+      setEditMode((mode) => !mode)
       setLogbook(data)
       await router.replace(router.asPath)
     } else {
@@ -43,8 +44,13 @@ export default function Logbox({ log, logbookId, reportId, setLogbook }) {
 
   return (
     <>
-      {!log.log && (
-        <Form form={form} layout="vertical" onFinish={onFinish}>
+      {editMode && (
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={{ log: log.log }}
+          onFinish={onFinish}
+        >
           <Form.Item
             label="Log"
             name="log"
@@ -64,18 +70,30 @@ export default function Logbox({ log, logbookId, reportId, setLogbook }) {
               style={{ width: '30%' }}
               loading={posting}
             >
-              Post
+              Update
+            </Button>
+            <Button
+              style={{ marginLeft: '1rem' }}
+              onClick={() => setEditMode((mode) => !mode)}
+            >
+              Cancel
             </Button>
           </Form.Item>
         </Form>
       )}
-      {log.log && (
-        <EditLogBox
-          logbookId={logbookId}
-          reportId={reportId}
-          log={log}
-          setLogbook={setLogbook}
-        />
+      {!editMode && (
+        <Row>
+          <Col span={24}>
+            <p>
+              {log.log}{' '}
+              <Button
+                type="text"
+                onClick={() => setEditMode((mode) => !mode)}
+                icon={<img src="/edit.svg" alt="edit" />}
+              />
+            </p>
+          </Col>
+        </Row>
       )}
     </>
   )
