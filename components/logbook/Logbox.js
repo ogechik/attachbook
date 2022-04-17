@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import EditLogBox from './EditLogBox'
 
-export default function Logbox({ log, logbookId, reportId, setLogbook }) {
+export default function LogBox({ log, logbookId, reportId, setLogbook }) {
   const router = useRouter()
   const [posting, setPosting] = useState(false)
   const [form] = Form.useForm()
