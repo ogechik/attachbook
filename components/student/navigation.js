@@ -69,6 +69,11 @@ export default function StudentNav() {
               selectedKeys={[current]}
               mode="horizontal"
             >
+              <Menu.Item key="session">
+                <Button type="text" onClick={() => changePage('/student')}>
+                  Session
+                </Button>
+              </Menu.Item>
               <Menu.Item key="logbook">
                 <Button
                   type="text"
@@ -147,6 +152,11 @@ export default function StudentNav() {
                 selectedKeys={[current]}
                 mode="inline"
               >
+                <Menu.Item key="session">
+                  <Button type="text" onClick={() => changePage('/student')}>
+                    Session
+                  </Button>
+                </Menu.Item>
                 <Menu.Item key="logbook">
                   <Button
                     type="text"
