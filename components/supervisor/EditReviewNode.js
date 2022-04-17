@@ -1,6 +1,6 @@
 import { Button, Form, Input, message, Row, Col, Typography } from 'antd'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 const { Text } = Typography
 
