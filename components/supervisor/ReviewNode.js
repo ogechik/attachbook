@@ -1,18 +1,15 @@
 import {
   Button,
-  Divider,
   Form,
   Input,
   message,
   Row,
   Col,
-  Typography,
 } from 'antd'
 
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import EditReviewNode from './EditReviewNode'
-const { Text } = Typography
 
 export default function ReviewNode({ logbookId, report, setLogbook }) {
   const router = useRouter()
