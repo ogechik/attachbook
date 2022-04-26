@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 import StudentNav from '../../../components/student/navigation'
 import Layout from '../../../components/Layout'
 import GoBack from '../../../components/admin/GoBack'
+import SupervisorNav from '../../../components/supervisor/navigation'
 const { Title } = Typography
 
 export default function PostOpportunity() {
@@ -45,7 +46,7 @@ export default function PostOpportunity() {
 
   return (
     <Layout title="post opportunity">
-      <StudentNav />
+      <SupervisorNav supervisor="company" />
       <Row>
         <Col
           lg={{ offset: 6, span: 18 }}

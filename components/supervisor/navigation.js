@@ -70,20 +70,22 @@ export default function SupervisorNav({ supervisor }) {
               selectedKeys={[current]}
               mode="horizontal"
             >
-              <Menu.Item key="students">
-                <Button
-                  type="text"
-                  onClick={() => changePage(`/${supervisor}`)}
-                >
-                  Students
-                </Button>
-              </Menu.Item>
+              {supervisor === 'company' ? null : (
+                <Menu.Item key="students">
+                  <Button
+                    type="text"
+                    onClick={() => changePage(`/${supervisor}`)}
+                  >
+                    Students
+                  </Button>
+                </Menu.Item>
+              )}
               <SubMenu key="SubMenu" title={<UserIcon />}>
                 <Menu.ItemGroup title="Actions">
                   <Menu.Item key="profile">
                     <Button
                       type="text"
-                      onClick={() => changePage(`/${supervisor}`)}
+                      onClick={() => changePage(`/${supervisor}/profile`)}
                     >
                       Profile
                     </Button>
@@ -150,7 +152,7 @@ export default function SupervisorNav({ supervisor }) {
                 <Menu.Item key="profile">
                   <Button
                     type="text"
-                    onClick={() => changePage('/supervisor/students')}
+                    onClick={() => changePage(`/${supervisor}/profile`)}
                   >
                     Profile
                   </Button>

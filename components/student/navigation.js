@@ -96,7 +96,7 @@ export default function StudentNav() {
                     {' '}
                     <Button
                       type="text"
-                      onClick={() => changePage('/student/attachments')}
+                      onClick={() => changePage('/student/profile')}
                     >
                       Profile
                     </Button>
@@ -176,7 +176,7 @@ export default function StudentNav() {
                 <Menu.Item key="profile">
                   <Button
                     type="text"
-                    onClick={() => changePage('/student/attachments')}
+                    onClick={() => changePage('/student/profile')}
                   >
                     Profile
                   </Button>

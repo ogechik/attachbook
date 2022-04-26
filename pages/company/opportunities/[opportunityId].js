@@ -14,6 +14,7 @@ import { useState } from 'react'
 import StudentNav from '../../../components/student/navigation'
 import Layout from '../../../components/Layout'
 import GoBack from '../../../components/admin/GoBack'
+import SupervisorNav from '../../../components/supervisor/navigation'
 const { Title } = Typography
 
 export default function Opportunities({ opportunity }) {
@@ -80,7 +81,7 @@ export default function Opportunities({ opportunity }) {
   }
   return (
     <Layout title={opportunity.position}>
-      <StudentNav />
+      <SupervisorNav supervisor="company" />
       <Row>
         <Col
           lg={{ offset: 6, span: 12 }}

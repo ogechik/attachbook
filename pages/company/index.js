@@ -11,7 +11,7 @@ export default function CompanyHome({ opportunities }) {
     router.push('/company/opportunities/post')
   return (
     <>
-      <SupervisorNav />
+      <SupervisorNav supervisor="company" />
       <Row justify="space-between">
         <Col lg={{ offset: 4, span: 15 }} xs={{ offset: 1 }}>
           <Title level={3}>Attachment Postings</Title>
