@@ -63,7 +63,7 @@ export default function StudentNav() {
               </Title>
             </div>
           </Col>
-          <Col span={8} offset={8}>
+          <Col span={10} offset={6}>
             <Menu
               onClick={handleClick}
               selectedKeys={[current]}
